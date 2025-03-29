@@ -8,7 +8,7 @@ resource "aws_subnet" "public_subnet" {
   tags = {
     Env     = var.env
     Project = var.project
-    Name    = "${var.env}-${var.project}-public-subnet-${each.value["az"]}"
+    Name    = "${local.fqn}-public-subnet-${each.value["az"]}"
     AZ      = "${each.value["az"]}"
   }
 }
@@ -23,7 +23,7 @@ resource "aws_subnet" "private_subnet" {
   tags = {
     Env     = var.env
     Project = var.project
-    Name    = "${var.env}-${var.project}-private-subnet-${each.value["az"]}"
+    Name    = "${local.fqn}-private-subnet-${each.value["az"]}"
     AZ      = "${each.value["az"]}"
   }
 }
