@@ -10,7 +10,7 @@ variable "env" {
 variable "project" {
   description = "The project in which the network will be created"
   type        = string
-  default     = "ssr-web-application"
+  default     = "ssr-web-app"
 }
 
 variable "region" {

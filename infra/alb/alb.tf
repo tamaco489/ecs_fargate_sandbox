@@ -1,9 +1,9 @@
-resource "aws_alb" "main" {
-  name               = "${local.fqn}-alb"
+resource "aws_alb" "public" {
+  name               = "${local.fqn}-public-alb"
   internal           = false
   load_balancer_type = "application"
   subnets            = data.terraform_remote_state.network.outputs.vpc.public_subnet_ids
-  security_groups    = [aws_security_group.alb.id]
+  security_groups    = [aws_security_group.public_alb.id]
 
   ip_address_type            = "ipv4"
   drop_invalid_header_fields = true
@@ -15,12 +15,12 @@ resource "aws_alb" "main" {
   tags = {
     Env     = var.env
     Project = var.project
-    Name    = "${local.fqn}-alb"
+    Name    = "${local.fqn}-public-alb"
   }
 }
 
 resource "aws_alb_listener" "http_listener" {
-  load_balancer_arn = aws_alb.main.arn
+  load_balancer_arn = aws_alb.public.arn
   port              = 80
   protocol          = "HTTP"
 
@@ -40,6 +40,6 @@ resource "aws_alb_listener" "http_listener" {
   tags = {
     Env     = var.env
     Project = var.project
-    Name    = "${local.fqn}-alb-http-listener"
+    Name    = "${local.fqn}-public-alb-http-listener"
   }
 }
