@@ -4,7 +4,7 @@
 resource "aws_iam_role" "ecs_task_execution_role" {
   name               = "${local.fqn}-ecs-task-execution-role"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role_policy.json
-  description = "IAM Role used by ECS tasks to allow ECS to pull container images and write logs to CloudWatch."
+  description        = "IAM Role used by ECS tasks to allow ECS to pull container images and write logs to CloudWatch."
 
   tags = {
     Env     = var.env
