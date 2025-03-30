@@ -8,7 +8,7 @@ variable "env" {
 }
 
 variable "project" {
-  description = "The project name"
+  description = "The project in which the network will be created"
   type        = string
   default     = "ssr-web-application"
 }
