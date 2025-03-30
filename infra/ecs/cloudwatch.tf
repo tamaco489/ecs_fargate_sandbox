@@ -1,5 +1,5 @@
-resource "aws_cloudwatch_log_group" "example" {
-  name              = "/aws/ecs/${aws_ecs_cluster.main.name}"
+resource "aws_cloudwatch_log_group" "ecs_cluster" {
+  name              = "/aws/ecs/${local.fqn}-cluster"
   retention_in_days = 3
 
   tags = {

@@ -2,8 +2,20 @@ resource "aws_ecs_cluster" "main" {
   name = "${local.fqn}-cluster"
 
   setting {
+    // NOTE: オブザーバビリティが強化された Container Insights（推奨設定）
     name  = "containerInsights"
-    value = "enabled"
+    value = "enhanced"
+  }
+
+  configuration {
+    execute_command_configuration {
+      logging = "OVERRIDE"
+      log_configuration {
+        // 暗号化はAWSが提供するKMSキーを利用する
+        cloud_watch_encryption_enabled = true
+        cloud_watch_log_group_name     = aws_cloudwatch_log_group.ecs_cluster.name
+      }
+    }
   }
 
   tags = {
