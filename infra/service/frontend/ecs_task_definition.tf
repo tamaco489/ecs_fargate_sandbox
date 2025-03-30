@@ -43,6 +43,6 @@ resource "aws_ecs_task_definition" "frontend_service" {
   tags = {
     Env     = var.env
     Project = var.project
-    Name    = "${local.fqn}-ecs-frontend-service"
+    Name    = "${local.fqn}-ecs-frontend-service-task-definition"
   }
 }
