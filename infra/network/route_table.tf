@@ -3,7 +3,7 @@
 # =================================================================
 resource "aws_route_table" "public" {
   for_each = var.public_subnet
-  vpc_id = aws_vpc.ssr_web_app.id
+  vpc_id = aws_vpc.main.id
 
   tags = {
     Env     = var.env
@@ -33,7 +33,7 @@ resource "aws_route_table_association" "public" {
 # =================================================================
 resource "aws_route_table" "private" {
   for_each = var.private_subnet
-  vpc_id = aws_vpc.ssr_web_app.id
+  vpc_id = aws_vpc.main.id
 
   tags = {
     Env     = var.env

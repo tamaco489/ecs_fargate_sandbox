@@ -1,5 +1,5 @@
 resource "aws_internet_gateway" "ssr_web_app" {
-  vpc_id = aws_vpc.ssr_web_app.id
+  vpc_id = aws_vpc.main.id
 
   tags = {
     Env     = var.env
