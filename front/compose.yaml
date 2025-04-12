@@ -1,0 +1,13 @@
+services:
+  front:
+    platform: linux/amd64
+    image: web-app
+    container_name: web-app
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
