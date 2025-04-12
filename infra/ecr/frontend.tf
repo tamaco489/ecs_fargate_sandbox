@@ -29,7 +29,7 @@ resource "aws_ecr_lifecycle_policy" "frontend_service" {
           "description" : "Maintain 5 images with versions, with the oldest being deleted when the 6th image is uploaded",
           "selection" : {
             "tagStatus" : "tagged",
-            "tagPrefixList" : ["push_notification_notifier_v"],
+            "tagPrefixList" : ["frontend_v"],
             "countType" : "imageCountMoreThan",
             "countNumber" : 5
           },
