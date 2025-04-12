@@ -14,6 +14,14 @@ data "terraform_remote_state" "alb" {
   }
 }
 
+data "terraform_remote_state" "ecr" {
+  backend = "s3"
+  config = {
+    bucket = "${var.env}-ssr-web-application-tfstate"
+    key    = "ecr/terraform.tfstate"
+  }
+}
+
 data "terraform_remote_state" "ecs" {
   backend = "s3"
   config = {

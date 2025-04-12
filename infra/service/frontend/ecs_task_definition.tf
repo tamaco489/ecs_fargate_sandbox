@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "frontend_service" {
   container_definitions = jsonencode([
     {
       name      = "${local.fqn}-frontend"
-      image     = "vercel/next.js:latest" # todo: このイメージ存在しない模様。ECR構築後に変更
+      image     = "${data.terraform_remote_state.ecr.outputs.frontend_service.url}:${var.env}"
       cpu       = 256
       memory    = 512
       essential = true // コンテナが停止した際にタスク全体も停止させる
