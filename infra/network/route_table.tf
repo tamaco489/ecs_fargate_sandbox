@@ -31,29 +31,29 @@ resource "aws_route_table_association" "public" {
 # =================================================================
 # private
 # =================================================================
-resource "aws_route_table" "private" {
-  for_each = var.private_subnet
-  vpc_id   = aws_vpc.main.id
+# resource "aws_route_table" "private" {
+#   for_each = var.private_subnet
+#   vpc_id   = aws_vpc.main.id
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-private-rt-${each.value["az"]}"
-    AZ      = "${each.value["az"]}"
-  }
-}
+#   tags = {
+#     Env     = var.env
+#     Project = var.project
+#     Name    = "${local.fqn}-private-rt-${each.value["az"]}"
+#     AZ      = "${each.value["az"]}"
+#   }
+# }
 
-resource "aws_route" "private_nat_gateway" {
-  for_each = var.private_subnet
+# resource "aws_route" "private_nat_gateway" {
+#   for_each = var.private_subnet
 
-  route_table_id         = aws_route_table.private[each.key].id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.ssr_web_app.id
-}
+#   route_table_id         = aws_route_table.private[each.key].id
+#   destination_cidr_block = "0.0.0.0/0"
+#   nat_gateway_id         = aws_nat_gateway.ssr_web_app.id
+# }
 
-resource "aws_route_table_association" "private" {
-  for_each = var.private_subnet
+# resource "aws_route_table_association" "private" {
+#   for_each = var.private_subnet
 
-  route_table_id = aws_route_table.private[each.key].id
-  subnet_id      = aws_subnet.private_subnet[each.key].id
-}
+#   route_table_id = aws_route_table.private[each.key].id
+#   subnet_id      = aws_subnet.private_subnet[each.key].id
+# }
