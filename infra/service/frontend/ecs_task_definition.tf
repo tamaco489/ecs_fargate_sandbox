@@ -16,8 +16,8 @@ resource "aws_ecs_task_definition" "frontend_service" {
 
   container_definitions = jsonencode([
     {
-      name      = "frontend"
-      image     = "vercel/next.js:latest"
+      name      = "${local.fqn}-frontend"
+      image     = "vercel/next.js:latest" # todo: このイメージ存在しない模様。ECR構築後に変更
       cpu       = 256
       memory    = 512
       essential = true // コンテナが停止した際にタスク全体も停止させる
@@ -40,9 +40,5 @@ resource "aws_ecs_task_definition" "frontend_service" {
     }
   ])
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-ecs-frontend-service-task-definition"
-  }
+  tags = { Name = "${local.fqn}-ecs-frontend-service-task-definition" }
 }

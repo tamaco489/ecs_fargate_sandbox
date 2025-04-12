@@ -6,11 +6,7 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role_policy.json
   description        = "IAM Role used by ECS tasks to allow ECS to pull container images and write logs to CloudWatch."
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-ecs-task-execution-role"
-  }
+  tags = { Name = "${local.fqn}-ecs-task-execution-role" }
 }
 
 // NOTE: AWS マネージドポリシー
@@ -30,11 +26,7 @@ resource "aws_iam_role" "ecs_task_role" {
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role_policy.json
   description        = "IAM Role used by ECS tasks to access AWS resources (S3, DynamoDB, SQS etc.) on behalf of the application."
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-ecs-task-role"
-  }
+  tags = { Name = "${local.fqn}-ecs-task-role" }
 }
 
 resource "aws_iam_policy" "ecs_task_policy" {
@@ -42,11 +34,7 @@ resource "aws_iam_policy" "ecs_task_policy" {
   policy      = data.aws_iam_policy_document.ecs_task_policy.json
   description = "Custom IAM policy that provides necessary permissions for ECS tasks to interact with other AWS resources."
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-ecs-task-policy"
-  }
+  tags = { Name = "${local.fqn}-ecs-task-policy" }
 }
 
 resource "aws_iam_policy_attachment" "ecs_task_policy_attachment" {
