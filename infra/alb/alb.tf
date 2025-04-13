@@ -20,18 +20,37 @@ resource "aws_alb_listener" "http_listener" {
   port              = 80
   protocol          = "HTTP"
 
-  // NOTE: デフォルトアクションは一旦検証のため200で設定、後で404に変える
+  # NOTE: port:80 (HTTP) にアクセスが来た場合は、port:443 (HTTPS) にリダイレクトさせる ※常時HTTPS化（HTTP Strict）のための設定
   default_action {
-    type = "fixed-response"
-    fixed_response {
-      content_type = "application/json"
-      status_code  = "200"
-      message_body = jsonencode({
-        message = "ok"
-        status  = "success"
-      })
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
     }
   }
 
   tags = { Name = "${local.fqn}-public-alb-http-listener" }
+}
+
+resource "aws_alb_listener" "https_listener" {
+  load_balancer_arn = aws_alb.public.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = data.terraform_remote_state.acm.outputs.acm.arn
+
+  default_action {
+    type = "fixed-response"
+    fixed_response {
+      content_type = "application/json"
+      status_code  = "404"
+      message_body = jsonencode({
+        status  = "error"
+        message = "not found"
+      })
+    }
+  }
+
+  tags = { Name = "${local.fqn}-public-alb-https-listener" }
 }
