@@ -1,8 +1,10 @@
 resource "aws_alb_target_group" "frontend_service" {
-  name        = "${local.fqn}-frontend"
-  port        = 3000
+  name = "${local.fqn}-frontend"
+  # NOTE: nginxへのテストアクセス成功後に変更する
+  # port        = 3000
+  port        = 80
   protocol    = "HTTP"
-  target_type = "ip"
+  target_type = "ip" # NOTE: ECS on Fargate 構成の場合各タスクがENIによる独立したプライベートIDを持つため
   vpc_id      = data.terraform_remote_state.network.outputs.vpc.id
 
   health_check {
@@ -30,8 +32,14 @@ resource "aws_alb_listener_rule" "frontend_service" {
   }
 
   condition {
-    host_header {
-      values = [var.listener_rule_host_header]
+    path_pattern {
+      values = ["/*"]
     }
   }
+
+  # condition {
+  #   host_header {
+  #     values = [var.listener_rule_host_header]
+  #   }
+  # }
 }
