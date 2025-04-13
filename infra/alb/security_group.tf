@@ -3,11 +3,7 @@ resource "aws_security_group" "public_alb" {
   description = "ALB Security Group"
   vpc_id      = data.terraform_remote_state.network.outputs.vpc.id
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-public-alb-sg"
-  }
+  tags = { Name = "${local.fqn}-public-alb-sg" }
 }
 
 resource "aws_vpc_security_group_egress_rule" "public_alb_egress" {
@@ -16,11 +12,7 @@ resource "aws_vpc_security_group_egress_rule" "public_alb_egress" {
   ip_protocol       = "-1"
   cidr_ipv4         = "0.0.0.0/0"
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-public-alb-sg-egress"
-  }
+  tags = { Name = "${local.fqn}-public-alb-sg-egress" }
 }
 
 // NOTE: httpsでの接続ができるようになったらこの設定は不要な想定なので削除してよいかも
@@ -32,11 +24,7 @@ resource "aws_vpc_security_group_ingress_rule" "public_alb_http_ingress" {
   ip_protocol       = "TCP"
   cidr_ipv4         = "0.0.0.0/0"
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-public-alb-sg-ingress-http"
-  }
+  tags = { Name = "${local.fqn}-public-alb-sg-ingress-http" }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "public_alb_https_ingress" {
@@ -47,9 +35,5 @@ resource "aws_vpc_security_group_ingress_rule" "public_alb_https_ingress" {
   ip_protocol       = "TCP"
   cidr_ipv4         = "0.0.0.0/0"
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-public-alb-sg-ingress-https"
-  }
+  tags = { Name = "${local.fqn}-public-alb-sg-ingress-https" }
 }
