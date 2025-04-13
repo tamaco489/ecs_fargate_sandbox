@@ -26,11 +26,8 @@ resource "aws_ecs_service" "frontend_service" {
 
   load_balancer {
     target_group_arn = aws_alb_target_group.frontend_service.arn
-    # NOTE: nginxへのテストアクセス成功後に変更する
-    # container_name   = "${local.fqn}-frontend"
-    # container_port   = 3000
-    container_name   = "nginx"
-    container_port   = 80
+    container_name   = "${local.fqn}-frontend"
+    container_port   = 3000
   }
 
   deployment_circuit_breaker {

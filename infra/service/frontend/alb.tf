@@ -1,8 +1,6 @@
 resource "aws_alb_target_group" "frontend_service" {
-  name = "${local.fqn}-frontend"
-  # NOTE: nginxへのテストアクセス成功後に変更する
-  # port        = 3000
-  port        = 80
+  name        = "${local.fqn}-frontend"
+  port        = 3000
   protocol    = "HTTP"
   target_type = "ip" # NOTE: ECS on Fargate 構成の場合各タスクがENIによる独立したプライベートIDを持つため
   vpc_id      = data.terraform_remote_state.network.outputs.vpc.id
