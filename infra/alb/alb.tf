@@ -12,11 +12,7 @@ resource "aws_alb" "public" {
   enable_http2               = true
   preserve_host_header       = true
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-public-alb"
-  }
+  tags = { Name = "${local.fqn}-public-alb" }
 }
 
 resource "aws_alb_listener" "http_listener" {
@@ -37,9 +33,5 @@ resource "aws_alb_listener" "http_listener" {
     }
   }
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-public-alb-http-listener"
-  }
+  tags = { Name = "${local.fqn}-public-alb-http-listener" }
 }

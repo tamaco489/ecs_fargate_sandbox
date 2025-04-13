@@ -19,6 +19,11 @@ variable "region" {
   default     = "ap-northeast-1"
 }
 
+variable "listener_rule_host_header" {
+  description = "The listener rule host header in which the frontend service will be created"
+  type        = string
+}
+
 locals {
   fqn = "${var.env}-${var.project}"
 }

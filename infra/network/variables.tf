@@ -48,17 +48,17 @@ variable "public_subnet" {
   }
 }
 
-variable "private_subnet" {
-  description = "The cidr block for the private subnet"
-  type        = map(map(string))
-  default = {
-    a = {
-      az   = "a"
-      cidr = "10.2.21.0/24"
-    }
-    d = {
-      az   = "d"
-      cidr = "10.2.22.0/24"
-    }
-  }
-}
+# variable "private_subnet" {
+#   description = "The cidr block for the private subnet"
+#   type        = map(map(string))
+#   default = {
+#     a = {
+#       az   = "a"
+#       cidr = "10.2.21.0/24"
+#     }
+#     d = {
+#       az   = "d"
+#       cidr = "10.2.22.0/24"
+#     }
+#   }
+# }

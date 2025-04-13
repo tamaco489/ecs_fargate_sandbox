@@ -1,3 +1,35 @@
+data "terraform_remote_state" "network" {
+  backend = "s3"
+  config = {
+    bucket = "${var.env}-ssr-web-application-tfstate"
+    key    = "network/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "alb" {
+  backend = "s3"
+  config = {
+    bucket = "${var.env}-ssr-web-application-tfstate"
+    key    = "alb/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "ecr" {
+  backend = "s3"
+  config = {
+    bucket = "${var.env}-ssr-web-application-tfstate"
+    key    = "ecr/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "ecs" {
+  backend = "s3"
+  config = {
+    bucket = "${var.env}-ssr-web-application-tfstate"
+    key    = "ecs/terraform.tfstate"
+  }
+}
+
 // Assume Role Policyを作成
 // このポリシーは ECS タスクが IAM ロールを引き受けることを許可します。
 // ECS タスクは `ecs-tasks.amazonaws.com` サービスによってロールを引き受ける必要があり、

@@ -23,15 +23,20 @@ logs:
 # =================================================================
 # awsリソースいろいろ操作する時用のやつ
 # =================================================================
+ENV := stg
 VERSION := frontend_v0.0.0
-# ecr
+
 .PHONY: auth push get-images delete-images
 auth:
 	aws ecr get-login-password --region ap-northeast-1 --profile ${AWS_PROFILE} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com
 
 push: auth
-	docker build --platform linux/amd64 --no-cache -t $(AWS_ACCOUNT_ID).dkr.ecr.ap-northeast-1.amazonaws.com/stg-ssr-web-app-frontend:$(VERSION) -f ./build/Dockerfile .
+	docker build --platform linux/amd64 --no-cache \
+		-t ${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/stg-ssr-web-app-frontend:$(VERSION) \
+		-t ${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/stg-ssr-web-app-frontend:$(ENV) \
+		-f ./build/Dockerfile .
 	docker push ${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/stg-ssr-web-app-frontend:$(VERSION)
+	docker push ${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/stg-ssr-web-app-frontend:$(ENV)
 
 get-images:
 	aws ecr list-images --repository-name stg-ssr-web-app-frontend --region ap-northeast-1 --profile ${AWS_PROFILE} --query 'imageIds[*]' | jq .
