@@ -41,19 +41,3 @@ resource "aws_ecs_service" "frontend_service" {
 
   tags = { Name = "${local.fqn}-ecs-frontend-service" }
 }
-
-resource "aws_appautoscaling_target" "frontend_service" {
-  max_capacity       = 3
-  min_capacity       = 1
-  resource_id        = "service/${data.terraform_remote_state.ecs.outputs.ecs_cluster.name}/${aws_ecs_service.frontend_service.name}"
-  scalable_dimension = "ecs:service:DesiredCount"
-  service_namespace  = "ecs"
-}
-
-# resource "aws_appautoscaling_policy" "frontend_service_cpu" {
-#   #
-# }
-
-# resource "aws_appautoscaling_policy" "frontend_service_memory" {
-#   #
-# }
