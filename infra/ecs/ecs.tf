@@ -18,11 +18,7 @@ resource "aws_ecs_cluster" "main" {
     }
   }
 
-  tags = {
-    Env     = var.env
-    Project = var.project
-    Name    = "${local.fqn}-ecs-cluster"
-  }
+  tags = { Name = "${local.fqn}-ecs-cluster" }
 }
 
 resource "aws_ecs_cluster_capacity_providers" "main" {
