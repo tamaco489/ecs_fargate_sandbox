@@ -16,26 +16,16 @@ resource "aws_ecs_task_definition" "frontend_service" {
 
   container_definitions = jsonencode([
     {
-      # NOTE: nginxへのテストアクセス成功後に変更する
-      # name      = "${local.fqn}-frontend"
-      # image     = "${data.terraform_remote_state.ecr.outputs.frontend_service.url}:${var.env}"
-      name      = "nginx"
-      image     = "nginx:1.14"
+      name      = "${local.fqn}-frontend"
+      image     = "${data.terraform_remote_state.ecr.outputs.frontend_service.url}:${var.env}"
       cpu       = 256
       memory    = 512
       essential = true // コンテナが停止した際にタスク全体も停止させる
 
-      # NOTE: nginxへのテストアクセス成功後に変更する
-      # portMappings = [
-      #   {
-      #     containerPort = 3000
-      #     protocol      = "tcp"
-      #   }
-      # ]
       portMappings = [
         {
-          containerPort = 80
-          hostPort      = 80
+          containerPort = 3000
+          hostPort      = 3000
           protocol      = "tcp"
         }
       ]
