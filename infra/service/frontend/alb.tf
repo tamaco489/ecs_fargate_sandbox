@@ -34,10 +34,4 @@ resource "aws_alb_listener_rule" "frontend_service" {
       values = ["/*"]
     }
   }
-
-  # condition {
-  #   host_header {
-  #     values = [var.listener_rule_host_header]
-  #   }
-  # }
 }
