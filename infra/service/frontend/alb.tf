@@ -17,11 +17,13 @@ resource "aws_alb_target_group" "frontend_service" {
     unhealthy_threshold = 2
   }
 
-  tags = { Name = "${local.fqn}-ecs-frontend-lb-target-group" }
+  tags = { Name = "${local.fqn}-ecs-frontend-alb-target-group" }
 }
 
 resource "aws_alb_listener_rule" "frontend_service" {
-  listener_arn = data.terraform_remote_state.alb.outputs.alb.http_listener_arn
+  listener_arn = data.terraform_remote_state.alb.outputs.alb.https_listener_arn
+
+  # 優先順位の指定、値の小さいものを優先的に評価される
   priority     = 100
 
   action {
@@ -34,4 +36,6 @@ resource "aws_alb_listener_rule" "frontend_service" {
       values = ["/*"]
     }
   }
+
+  tags = { Name = "${local.fqn}-ecs-frontend-alb-listener-rule" }
 }
